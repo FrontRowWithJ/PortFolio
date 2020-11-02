@@ -1,0 +1,98 @@
+:root {
+  --start-pos: -100vh;
+  --intermediate-pos: 15vh;
+  --end-pos: 10vh;
+  --first-animation-time: 500ms;
+  --second-animation-time: 250ms;
+}
+
+.animate-forward {
+  animation-name: forward-animate-up, forward-animate-down;
+  animation-duration: var(--first-animation-time), var(--second-animation-time);
+  animation-delay: 0ms, var(--first-animation-time);
+  animation-timing-function: ease-out, ease-in-out;
+  animation-iteration-count: 1, 1;
+  animation-fill-mode: forwards, forwards;
+}
+
+.animate-backward {
+  animation-name: backward-animate-up, backward-animate-down;
+  animation-duration: var(--second-animation-time), var(--first-animation-time);
+  animation-delay: 0ms, var(--second-animation-time);
+  animation-timing-function: ease-out, ease-in-out;
+  animation-iteration-count: 1, 1;
+  animation-fill-mode: forwards, forwards;
+}
+.project-blurb {
+  height: 80vh;
+  bottom: var(--start-pos);
+}
+
+.project-header {
+  height: 85%;
+}
+
+.project-img {
+  top: 5%;
+  width: 10rem;
+  height: 40%;
+}
+
+.project-textbox {
+  width: 60%;
+  height: 80%;
+}
+
+.project-text {
+  text-align: center;
+  width: 60%;
+  height: 50%;
+}
+
+.link-container {
+  height: 15%;
+}
+
+.project-link {
+  flex-grow: 2;
+  margin: 0px 5%;
+}
+
+@keyframes forward-animate-up {
+  from {
+    bottom: var(--start-pos);
+  }
+
+  to {
+    bottom: var(--intermediate-pos);
+  }
+}
+
+@keyframes forward-animate-down {
+  from {
+    bottom: var(--intermediate-pos);
+  }
+  to {
+    bottom: var(--end-pos);
+  }
+}
+
+@keyframes backward-animate-up {
+  from {
+    bottom: var(--end-pos);
+  }
+
+  to {
+    bottom: var(--intermediate-pos);
+  }
+}
+
+@keyframes backward-animate-down {
+  from {
+    bottom: var(--intermediate-pos);
+  }
+
+  to {
+    bottom: var(--start-pos);
+  }
+}

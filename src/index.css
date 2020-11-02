@@ -1,13 +1,92 @@
-body {
+@import url(//db.onlinewebfonts.com/c/860c3ec7bbc5da3e97233ccecafe512e?family=Circular+Std+Book);
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
+}
+#root {
+  height: 100vh;
+  max-height: 100vh;
+  background: #a4a1d4;
+  font-family: "circular std book";
+  overflow: hidden;
+  display: relative;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#blurb {
+  animation: margin-animation 2s ease-in-out,
+    opacity-animation 2s cubic-bezier(1, -0.01, 1, -0.01);
+  border-radius: 53px;
+  background: #a4a1d4;
+  box-shadow: 20px 20px 60px #8b89b4, -20px -20px 60px #bdb9f4;
+}
+
+#profile-photo {
+  border-radius: 50%;
+  background: linear-gradient(145deg, #9491bf, #aface3);
+  box-shadow: 5px 5px 10px #9593c1, -5px -5px 10px #b3afe7;
+}
+
+.linkedin svg,
+.github svg {
+  fill: white;
+  width: 100%;
+}
+
+.linkedin svg:hover,
+.github svg:hover {
+  fill: black;
+}
+
+@keyframes margin-animation {
+  from {
+    margin-top: 100vh;
+  }
+  to {
+    margin-top: 2rem;
+  }
+}
+
+@keyframes opacity-animation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  #blurb {
+    height: 25vw;
+  }
+}
+
+@media (min-width: 1440px) {
+  #profile-photo {
+    width: 6rem;
+  }
+  #desc {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  #desc {
+    font-size: 2.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  #profile-photo {
+    width: 10rem;
+    margin-top: 2rem;
+  }
+
+  #links a {
+    width: 7rem;
+    height: 7rem;
+    margin-bottom: 2rem;
+  }
 }
