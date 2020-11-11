@@ -1,7 +1,7 @@
 :root {
   --start-pos: -100vh;
-  --intermediate-pos: 15vh;
-  --end-pos: 10vh;
+  --intermediate-pos: 30vh;
+  --end-pos: 20vh;
   --first-animation-time: 500ms;
   --second-animation-time: 250ms;
 }
@@ -24,8 +24,22 @@
   animation-fill-mode: forwards, forwards;
 }
 .project-blurb {
-  height: 80vh;
+  height: 70vh;
   bottom: var(--start-pos);
+  transform-style: preserve-3d;
+}
+
+.project-blurb > * {
+  transform-style: preserve-3d;
+}
+
+[id|="image"],
+[id|="textbox"],
+[id|="github-link"],
+[id|="linkedin-link"],
+[id|="project-link"],
+[id|="project-text"] {
+  transition: all 0.75s ease-out;
 }
 
 .project-header {

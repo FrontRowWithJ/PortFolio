@@ -1,15 +1,25 @@
-@import url(//db.onlinewebfonts.com/c/860c3ec7bbc5da3e97233ccecafe512e?family=Circular+Std+Book);
+/* @import url(//db.onlinewebfonts.com/c/860c3ec7bbc5da3e97233ccecafe512e?family=Circular+Std+Book); */
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("./Gilroy-Light.otf") format("otf");
+}
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  perspective: 1000px;
+}
 #root {
   height: 100vh;
   max-height: 100vh;
   background: #a4a1d4;
-  font-family: "circular std book";
+  /* font-family: "circular std book"; */
+  font-family: "Gilroy";
   overflow: hidden;
   display: relative;
 }
@@ -30,13 +40,20 @@
 
 .linkedin svg,
 .github svg {
-  fill: white;
   width: 100%;
 }
 
-.linkedin svg:hover,
+/* .linkedin svg:hover,
 .github svg:hover {
   fill: black;
+} */
+
+a:hover svg {
+  fill: yellow;
+}
+
+a:hover {
+  background-color: blue;
 }
 
 @keyframes margin-animation {
