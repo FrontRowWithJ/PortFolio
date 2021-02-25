@@ -1,0 +1,102 @@
+:root {
+    --anim-time: .2s;
+    --blur-amount: 10px
+}
+
+.img-view-container {
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform var(--anim-time) linear;
+    transform: scale(1.0);
+}
+
+.img-view-container:hover {
+    transform: scale(1.05);
+}
+
+.img-view-container {
+    cursor: pointer;
+}
+
+.img-view-container img {
+    transition: filter var(--anim-time) linear;
+    filter: blur(0);
+    width: calc(100% - var(--blur-amount) * 2);
+    height: calc(100% - var(--blur-amount) * 2);
+}
+
+.img-view-container div {
+    transition: opacity var(--anim-time) linear;
+    z-index: -1;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    flex-direction: column;
+}
+
+.img-view-container:hover img {
+    filter: blur(var(--blur-amount));
+}
+
+.img-view-container:hover div {
+    z-index: 1;
+    opacity: 1;
+    border: 1px solid white;
+    border-radius: 10px;
+}
+
+.carousel-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(189, 189, 189, 0.9);
+}
+
+.carousel-button-container {
+    height: 4rem;
+    width: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(51, 51, 51, .3);
+    border-radius: 100vh;
+    cursor: pointer;
+    transition: background-color .2s ease-in-out;
+}
+
+.carousel-button-container:hover {
+    background-color: rgb(51, 51, 51, .8);
+}
+
+.carousel-button-container:nth-child(1) {
+    margin: 0 auto 0 2vw;
+}
+
+.carousel-button-container:nth-child(3) {
+    margin: 0 2vw 0 auto;
+}
+
+.arrow {
+    width: 100%;
+    height: 100%;
+}
+
+.arrow polyline {
+    stroke: rgba(255, 255, 255, 0.5);
+    transition: stroke .2s ease-in-out;
+}
+
+.carousel-button-container:hover .arrow polyline {
+    stroke: white;
+}
+
+.carousel-nav {
+    margin-top: 5vh;
+}

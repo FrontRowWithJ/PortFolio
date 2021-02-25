@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import PortfolioBlurb from "./PortfolioBlurb.js";
-import ProjectDisplay from "./ProjectDisplay.js";
-function App() {
+import PortfolioBlurb from './PortfolioBlurb'
+import ProjectDisplay from './ProjectDisplay'
+const App = () => {
     const [animateForward, setAnimateForward] = useState(undefined);
     const [toggle, setToggle] = useState(true);
     return (
@@ -13,7 +13,7 @@ function App() {
         }}
             className="h-full w-full flex flex-col items-center relative">
             <PortfolioBlurb />
-            <ProjectDisplay 
+            <ProjectDisplay
                 animateForward={animateForward}
                 setAnimateForward={setAnimateForward}
                 toggle={toggle}

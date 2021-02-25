@@ -1,13 +1,13 @@
-import React from 'react';
-import LinkedIn from "./LinkedIn.js";
-import Github from "./Github.js";
-import headshot from "./empty-headshot.jpg";
+import React from 'react'
+import LinkedIn from './Linkedin'
+import Github from './Github'
+import headshot from './empty-headshot.jpg'
 import './tailwind.output.css';
 import './index.css';
 
-function PortfolioBlurb() {
+const PortfolioBlurb = () => {
     return (
-        <div id="blurb" className="relative bg-teal-500 w-64 lg:w-1/4 h-64 mt-8 flex flex-col items-center">
+        <div id="blurb" className="absolute bg-teal-500 w-64 lg:w-1/4 h-64 flex flex-col items-center">
             <img id="profile-photo"
                 className="w-16
                            flex
@@ -21,11 +21,11 @@ function PortfolioBlurb() {
                 </div>
             </div>
             <div id="links" className="flex-row flex justify-center w-full items-end">
-                <a className="linkedin w-8 h-8 xl:h-16 xl:w-16 mr-2 mb-1" href="https://www.linkedin.com/in/adebusum/">
-                    <LinkedIn className="linkedin h-full w-full" />
+                <a className="w-8 h-8 xl:h-16 xl:w-16 mr-2 mb-1" href="https://www.linkedin.com/in/adebusum/">
+                    <LinkedIn fill="white" className="linkedin-svg" />
                 </a>
-                <a className="github w-8 h-8 xl:h-16 xl:w-16 ml-2 mb-1" href="https://github.com/FrontRowWithJ">
-                    <Github className="github h-full w-full" />
+                <a className="w-8 h-8 xl:h-16 xl:w-16 ml-2 mb-1" href="https://github.com/FrontRowWithJ">
+                    <Github fill="white" className="github-svg" />
                 </a>
             </div>
         </div>

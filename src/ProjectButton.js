@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import "./proj-button.css";
 
-const DELAY = 750;
+const DELAY = 250;
 const animate = (isForward, condition, blur) => {
     const button = document.getElementById("project-button");
     button.classList.add(isForward ? "project-button" : "project-button-reverse");
     button.classList.remove(isForward ? "project-button-reverse" : "project-button");
-    document.getElementById("blurb").style.filter = `blur(${blur})`;
-    const projects = [...document.getElementsByClassName("project-blurb")];
+    document.getElementById("blurb").style.filter = `blur(${blur}px)`;
     if (condition) {
-        projects.forEach((elem, i) => {
+        [...document.getElementsByClassName("project-blurb")].forEach((elem, i, arr) => {
             setTimeout(() => {
                 elem.classList.add(isForward ? "animate-forward" : "animate-backward");
                 elem.classList.remove(isForward ? "animate-backward" : "animate-forward");
-            }, isForward ? DELAY * i : (projects.length - i - 1) * DELAY);
+            }, isForward ? DELAY * i : (arr.length - i - 1) * DELAY);
         });
     }
     const navButton = document.getElementById("nav-container");
@@ -24,20 +23,18 @@ const animate = (isForward, condition, blur) => {
         setTimeout(() => navButton.style.left = "-40vw", 1000);
 }
 
-function ProjectButton(props) {
+const ProjectButton = (props) => {
 
     useEffect(() => {
         if (props.animateForward === true) {
             // Hide the button and show the projects
-            animate(true, true, "10px");
+            animate(true, true, 10);
             const navButton = document.getElementById("nav-container");
             navButton.style.left = "";
-            navButton.classList.add("to-opaque");
-            setTimeout(() => { navButton.classList.remove("to-transparent") });
         } else if (props.animateForward === false) {
             // Show the button and hide the projects
             const elem = document.getElementsByClassName("project-blurb")[0];
-            animate(false, elem.classList.contains("animate-forward"), "0px");
+            animate(false, elem.classList.contains("animate-forward"), 0);
         }
     }, [props.animateForward, props.setAnimateForward]);
     return (

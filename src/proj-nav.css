@@ -1,9 +1,3 @@
-.opacity-empty {
-  opacity: 0;
-  transition: opacity .5s;
-}
-
 .opacity-anim {
   opacity: 1;
-  transition: opacity .5s;
 }

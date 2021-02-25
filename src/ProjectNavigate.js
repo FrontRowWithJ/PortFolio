@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react'
-import Arrow from "./Arrow.js";
-import "./proj-nav.css";
+import Arrow from './Arrow'
+import './proj-nav.css'
 
 const eventHandler = (target, size, transform) => {
     target.style.width = target.style.height = size;
@@ -23,9 +23,9 @@ const disable = (target) => {
     eventHandler(target, "2.5rem", "");
 }
 
-function ProjectNavigate(props) {
+const ProjectNavigate = (props) => {
     const [index, setIndex] = useState(0);
-
+    const [isEnabled, setEnable] = useState(true);
     useEffect(() => {
         const [l, r] = [...document.getElementById("nav-container").children];
         if (index === 0) disable(l);
@@ -39,28 +39,44 @@ function ProjectNavigate(props) {
         props.setIndices(arr);
     }, [index]);
 
+    const animateCardSwitch = (index) => {
+        setEnable(false);
+        const projectBlurb = props.blurbRefs.current[index].current;
+        projectBlurb.classList.toggle("translate-anim");
+        projectBlurb.ontransitionend = () => {
+            projectBlurb.classList.toggle("translate-anim");
+            setIndex(index);
+            projectBlurb.ontransitionend = null;
+            setEnable(true);
+        }
+    }
+
     return (
-        <div id="nav-container" style={{ bottom: "10vh", left: "-40vw" }} className="opacity-empty absolute grid grid-cols-2 grid-rows-1 gap-2 h-12 w-24">
-            <Button id="arrow-left"
+        <div id="nav-container" style={{ bottom: "10vh", left: "-40vw", transition: "opacity .5s" }} className="opacity-0 absolute grid grid-cols-2 grid-rows-1 gap-2 h-12 w-24">
+            <Button
                 gridPos="col-start-1 col-end-2"
                 onclick={() => {
-                    if (index > 0) setIndex(index - 1);
+                    if (index > 0 && isEnabled) {
+                        animateCardSwitch(index - 1);
+                    }
                 }}
-                rotate="rotate(180 256 256)"
+                rotate="180"
             />
-            <Button id="arrow-right"
+            <Button
                 gridPos="col-start-2 col-end-3"
                 onclick={() => {
-                    if (index < props.numOfProjects - 1) setIndex(index + 1);
+                    if (index < props.numOfProjects - 1 && isEnabled) {
+                        animateCardSwitch(index + 1);
+                    }
                 }}
             />
         </div>
     );
 }
 
-function Button(props) {
+const Button = (props) => {
     return (
-        <div id={props.id} className={"rounded-full h-10 w-10 flex items-center justify-center " + props.gridPos}
+        <div className={"rounded-full h-10 w-10 flex items-center justify-center " + props.gridPos}
             onClick={props.onclick}
             style={{ background: "rgba(255, 255, 255, .5" }}>
             <Arrow rotate={props.rotate} />
