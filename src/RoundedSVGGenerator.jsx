@@ -1,18 +1,22 @@
 const roundPathCorners = (pathString, radius, useFractionalRadius) => {
   const moveTowardsLength = (movingPoint, targetPoint, amount) => {
-    var width = (targetPoint.x - movingPoint.x);
-    var height = (targetPoint.y - movingPoint.y);
+    var width = targetPoint.x - movingPoint.x;
+    var height = targetPoint.y - movingPoint.y;
 
     var distance = Math.sqrt(width * width + height * height);
 
-    return moveTowardsFractional(movingPoint, targetPoint, Math.min(1, amount / distance));
-  }
+    return moveTowardsFractional(
+      movingPoint,
+      targetPoint,
+      Math.min(1, amount / distance)
+    );
+  };
   const moveTowardsFractional = (movingPoint, targetPoint, fraction) => {
     return {
       x: movingPoint.x + (targetPoint.x - movingPoint.x) * fraction,
-      y: movingPoint.y + (targetPoint.y - movingPoint.y) * fraction
+      y: movingPoint.y + (targetPoint.y - movingPoint.y) * fraction,
     };
-  }
+  };
 
   // Adjusts the ending position of a command
   const adjustCommand = (cmd, newPoint) => {
@@ -20,7 +24,7 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
       cmd[cmd.length - 2] = newPoint.x;
       cmd[cmd.length - 1] = newPoint.y;
     }
-  }
+  };
 
   // Gives an {x, y} object for a command's ending position
   const pointForCommand = (cmd) => {
@@ -28,22 +32,20 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
       x: parseFloat(cmd[cmd.length - 2]),
       y: parseFloat(cmd[cmd.length - 1]),
     };
-  }
+  };
 
   // Split apart the path, handing concatonated letters and numbers
-  var pathParts = pathString
-    .split(/[,\s]/)
-    .reduce(function (parts, part) {
-      var match = part.match("([a-zA-Z])(.+)");
-      if (match) {
-        parts.push(match[1]);
-        parts.push(match[2]);
-      } else {
-        parts.push(part);
-      }
+  var pathParts = pathString.split(/[,\s]/).reduce(function (parts, part) {
+    var match = part.match("([a-zA-Z])(.+)");
+    if (match) {
+      parts.push(match[1]);
+      parts.push(match[2]);
+    } else {
+      parts.push(part);
+    }
 
-      return parts;
-    }, []);
+    return parts;
+  }, []);
 
   // Group the commands with their arguments for easier handling
   var commands = pathParts.reduce(function (commands, part) {
@@ -78,12 +80,18 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
       var curCmd = commands[cmdIndex];
 
       // Handle closing case
-      var nextCmd = (curCmd == virtualCloseLine)
-        ? commands[1]
-        : commands[cmdIndex + 1];
+      var nextCmd =
+        curCmd == virtualCloseLine ? commands[1] : commands[cmdIndex + 1];
 
       // Nasty logic to decide if this path is a candidite.
-      if (nextCmd && prevCmd && (prevCmd.length > 2) && curCmd[0] == "L" && nextCmd.length > 2 && nextCmd[0] == "L") {
+      if (
+        nextCmd &&
+        prevCmd &&
+        prevCmd.length > 2 &&
+        curCmd[0] == "L" &&
+        nextCmd.length > 2 &&
+        nextCmd[0] == "L"
+      ) {
         // Calc the points we're dealing with
         var prevPoint = pointForCommand(prevCmd);
         var curPoint = pointForCommand(curCmd);
@@ -93,8 +101,16 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
         var curveStart, curveEnd;
 
         if (useFractionalRadius) {
-          curveStart = moveTowardsFractional(curPoint, prevCmd.origPoint || prevPoint, radius);
-          curveEnd = moveTowardsFractional(curPoint, nextCmd.origPoint || nextPoint, radius);
+          curveStart = moveTowardsFractional(
+            curPoint,
+            prevCmd.origPoint || prevPoint,
+            radius
+          );
+          curveEnd = moveTowardsFractional(
+            curPoint,
+            nextCmd.origPoint || nextPoint,
+            radius
+          );
         } else {
           curveStart = moveTowardsLength(curPoint, prevPoint, radius);
           curveEnd = moveTowardsLength(curPoint, nextPoint, radius);
@@ -107,11 +123,19 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
 
         // The curve control points are halfway between the start/end of the curve and
         // the original point
-        var startControl = moveTowardsFractional(curveStart, curPoint, .5);
-        var endControl = moveTowardsFractional(curPoint, curveEnd, .5);
+        var startControl = moveTowardsFractional(curveStart, curPoint, 0.5);
+        var endControl = moveTowardsFractional(curPoint, curveEnd, 0.5);
 
-        // Create the curve 
-        var curveCmd = ["C", startControl.x, startControl.y, endControl.x, endControl.y, curveEnd.x, curveEnd.y];
+        // Create the curve
+        var curveCmd = [
+          "C",
+          startControl.x,
+          startControl.y,
+          endControl.x,
+          endControl.y,
+          curveEnd.x,
+          curveEnd.y,
+        ];
         // Save the original point for fractional calculations
         curveCmd.origPoint = curPoint;
         resultCommands.push(curveCmd);
@@ -123,7 +147,9 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
 
     // Fix up the starting point and restore the close path if the path was orignally closed
     if (virtualCloseLine) {
-      var newStartPoint = pointForCommand(resultCommands[resultCommands.length - 1]);
+      var newStartPoint = pointForCommand(
+        resultCommands[resultCommands.length - 1]
+      );
       resultCommands.push(["Z"]);
       adjustCommand(resultCommands[0], newStartPoint);
     }
@@ -131,10 +157,12 @@ const roundPathCorners = (pathString, radius, useFractionalRadius) => {
     resultCommands = commands;
   }
 
-  return resultCommands.reduce(function (str, c) { return str + c.join(" ") + " "; }, "");
-}
+  return resultCommands.reduce(function (str, c) {
+    return str + c.join(" ") + " ";
+  }, "");
+};
 
-const path = "M 0 512 L 512 512 L 512 0 L 0 64 Z"
+const path = "M 0 512 L 512 512 L 512 0 L 0 64 Z";
 
 const res = roundPathCorners(path, 32, false);
-console.log(`d="${res}"`)
+console.log(`d="${res}"`);
