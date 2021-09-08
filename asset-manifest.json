@@ -1,24 +1,39 @@
 {
   "files": {
-    "main.css": "/Portfolio/static/css/main.046829aa.chunk.css",
-    "main.js": "/Portfolio/static/js/main.342d4310.chunk.js",
-    "main.js.map": "/Portfolio/static/js/main.342d4310.chunk.js.map",
+    "main.css": "/Portfolio/static/css/main.c1e3cd8c.chunk.css",
+    "main.js": "/Portfolio/static/js/main.f0e29386.chunk.js",
+    "main.js.map": "/Portfolio/static/js/main.f0e29386.chunk.js.map",
     "runtime-main.js": "/Portfolio/static/js/runtime-main.a8c0044a.js",
     "runtime-main.js.map": "/Portfolio/static/js/runtime-main.a8c0044a.js.map",
-    "static/js/2.d742bb70.chunk.js": "/Portfolio/static/js/2.d742bb70.chunk.js",
-    "static/js/2.d742bb70.chunk.js.map": "/Portfolio/static/js/2.d742bb70.chunk.js.map",
+    "static/js/2.d92ccf67.chunk.js": "/Portfolio/static/js/2.d92ccf67.chunk.js",
+    "static/js/2.d92ccf67.chunk.js.map": "/Portfolio/static/js/2.d92ccf67.chunk.js.map",
     "index.html": "/Portfolio/index.html",
-    "precache-manifest.1a63b36a35efe482961eb3f9e3416c07.js": "/Portfolio/precache-manifest.1a63b36a35efe482961eb3f9e3416c07.js",
+    "precache-manifest.f630df05c359e3c15c952806ee9f6194.js": "/Portfolio/precache-manifest.f630df05c359e3c15c952806ee9f6194.js",
     "service-worker.js": "/Portfolio/service-worker.js",
-    "static/css/main.046829aa.chunk.css.map": "/Portfolio/static/css/main.046829aa.chunk.css.map",
-    "static/js/2.d742bb70.chunk.js.LICENSE.txt": "/Portfolio/static/js/2.d742bb70.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/Portfolio/static/media/Gilroy-Light.c62aded7.otf",
-    "static/media/mandelbrot_set.png": "/Portfolio/static/media/mandelbrot_set.0a89ba28.png"
+    "static/css/main.c1e3cd8c.chunk.css.map": "/Portfolio/static/css/main.c1e3cd8c.chunk.css.map",
+    "static/js/2.d92ccf67.chunk.js.LICENSE.txt": "/Portfolio/static/js/2.d92ccf67.chunk.js.LICENSE.txt",
+    "static/media/C++.svg": "/Portfolio/static/media/C++.747271de.svg",
+    "static/media/CSS.svg": "/Portfolio/static/media/CSS.fa8fe313.svg",
+    "static/media/algotodata-img-0.jpg": "/Portfolio/static/media/algotodata-img-0.9815750f.jpg",
+    "static/media/algotodata-img-1.jpg": "/Portfolio/static/media/algotodata-img-1.5710fa5c.jpg",
+    "static/media/algotodata-img-2.jpg": "/Portfolio/static/media/algotodata-img-2.6b57ca4e.jpg",
+    "static/media/bash.svg": "/Portfolio/static/media/bash.ba30b1e5.svg",
+    "static/media/ffmpeg.svg": "/Portfolio/static/media/ffmpeg.9fa8b72d.svg",
+    "static/media/html.svg": "/Portfolio/static/media/html.83389581.svg",
+    "static/media/javascript.svg": "/Portfolio/static/media/javascript.029bc28b.svg",
+    "static/media/julia-image-0.jpg": "/Portfolio/static/media/julia-image-0.462d1c15.jpg",
+    "static/media/julia-image-1.jpg": "/Portfolio/static/media/julia-image-1.77c084e3.jpg",
+    "static/media/julia-image-2.jpg": "/Portfolio/static/media/julia-image-2.c3fe0f19.jpg",
+    "static/media/mandelbrot_set.png": "/Portfolio/static/media/mandelbrot_set.0a89ba28.png",
+    "static/media/pandas.svg": "/Portfolio/static/media/pandas.2180fb4b.svg",
+    "static/media/python.svg": "/Portfolio/static/media/python.4395ca5e.svg",
+    "static/media/react.svg": "/Portfolio/static/media/react.22ccf5b4.svg",
+    "static/media/tkinter.png": "/Portfolio/static/media/tkinter.8527729d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a8c0044a.js",
-    "static/js/2.d742bb70.chunk.js",
-    "static/css/main.046829aa.chunk.css",
-    "static/js/main.342d4310.chunk.js"
+    "static/js/2.d92ccf67.chunk.js",
+    "static/css/main.c1e3cd8c.chunk.css",
+    "static/js/main.f0e29386.chunk.js"
   ]
 }
