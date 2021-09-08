@@ -65,7 +65,7 @@ const ProjectNavigate = (props) => {
             animateCardSwitch(index - 1);
           }
         }}
-        rotate="180"
+        direction="left"
       />
       <Button
         gridPos="col-start-2 col-end-3"
@@ -89,7 +89,7 @@ const Button = (props) => {
       onClick={props.onclick}
       style={{ background: "rgba(255, 255, 255, .5" }}
     >
-      <Arrow rotate={props.rotate} />
+      <Arrow direction={props.direction} />
     </div>
   );
 };

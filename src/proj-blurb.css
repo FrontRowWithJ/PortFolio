@@ -260,7 +260,7 @@
   grid-column-end: 3;
   grid-row-start: 1;
   grid-row-end: 2;
-  height: 90%; 
+  height: 90%;
 }
 
 .view-project-section a:nth-child(2) {
@@ -349,4 +349,11 @@
   width: 200%;
   transition: clip-path 1s ease-in-out;
   clip-path: polygon(0 0, 12.5% 0, 25% 100%, 12.5% 100%);
+}
+
+.techlist {
+  justify-content: center;
+  display: flex;
+  height: 30px;
+  gap: 10px;
 }

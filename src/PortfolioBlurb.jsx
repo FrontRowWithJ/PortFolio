@@ -31,7 +31,7 @@ const PortfolioBlurb = () => {
             touch!
           </a>{" "}
           If not, I'll leave you with something
-          <a href="/404" className="text-white" onClick={(event) => {}}>
+          <a href="/Portfolio/404" className="text-white" onClick={(event) => {}}>
             {" "}
             better!
           </a>

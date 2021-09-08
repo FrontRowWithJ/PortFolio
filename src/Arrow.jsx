@@ -10,7 +10,7 @@ const Arrow = (props) => {
       viewBox="0 0 512 512"
     >
       <polyline
-        transform={`rotate(${props.rotate} 256 256)`}
+        transform={`rotate(${props.direction === "left" ? 180 : 0} 256 256)`}
         fill="none"
         stroke="white"
         strokeLinecap="round"

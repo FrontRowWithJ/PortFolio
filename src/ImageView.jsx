@@ -1,32 +1,15 @@
 import React, { useState, useRef } from "react";
 import "./image-view.css";
-import algotodataLogo from "./algotodataLogo.png";
-import mandelbrot from "./mandelbrot_set.png";
-import headshot from "./empty-headshot.jpg";
 import NavButtons from "./NavigateButtons";
 import Carousel from "./Carousel";
 
-const images = [
-  {
-    src: algotodataLogo,
-    alt: "",
-  },
-  {
-    src: mandelbrot,
-    alt: "",
-  },
-  {
-    src: headshot,
-    alt: "",
-  },
-];
-
 const CAROUSEL_VIEW = false,
   DEFAULT_VIEW = true;
+
 const ImageView = (props) => {
   const [view, setView] = useState(DEFAULT_VIEW);
   const imageRefs = useRef([]);
-  imageRefs.current = images.map(() => React.createRef());
+  imageRefs.current = props.images.map(() => React.createRef());
   const [index, setIndex] = useState(0);
 
   const nextImage = (newIndex, setIndex, setEnable) => {
@@ -50,7 +33,7 @@ const ImageView = (props) => {
 
   return (
     <>
-      {images.map((image, index) => {
+      {props.images.map((image, index) => {
         return (
           <div
             key={index}
@@ -80,7 +63,7 @@ const ImageView = (props) => {
         }}
       >
         <Carousel
-          images={images}
+          images={props.images}
           imageRefs={imageRefs.current}
           onClick={(e) => {
             if (e.target.classList.contains("image-container"))
@@ -91,7 +74,7 @@ const ImageView = (props) => {
           index={index}
           setIndex={setIndex}
           className="carousel-nav absolute"
-          numOfItems={images.length}
+          numOfItems={props.images.length}
           updateState={nextImage}
           style={{ bottom: "2vh" }}
         />

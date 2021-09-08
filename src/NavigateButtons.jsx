@@ -29,8 +29,7 @@ const NavigateButtons = (props) => {
     enable(rightButton);
     if (props.index === 0) disable(leftButton);
     else if (props.index === props.numOfItems - 1) disable(rightButton);
-  }, [props.index]);
-
+  }, [props.index, props.numOfItems]);
   return (
     <div
       ref={navContainerRef}
@@ -45,7 +44,7 @@ const NavigateButtons = (props) => {
           if (props.index > 0 && isEnabled)
             props.updateState(props.index - 1, props.setIndex, setEnable);
         }}
-        rotate="180"
+        direction="left"
       />
       <Button
         gridPos="col-start-2 col-end-3"
@@ -71,7 +70,7 @@ const Button = (props) => {
         transition: "all .2s ease-in-out",
       }}
     >
-      <Arrow rotate={props.rotate} />
+      <Arrow direction={props.direction} />
     </div>
   );
 };

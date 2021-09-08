@@ -5,6 +5,7 @@ import Textbox from "./ProjectTextBox";
 import "./proj-blurb.css";
 import Arrow from "./Arrow";
 import ImageView from "./ImageView";
+import { times } from "lodash";
 
 const ProjectBlurb = (props) => {
   // const filter = `drop-shadow(-20px -20px 10px ${props.filter1}) drop-shadow(20px 20px 10px ${props.filter2})`;
@@ -18,7 +19,7 @@ const ProjectBlurb = (props) => {
     viewProjectRef,
     textRef,
     aboutRef,
-  ] = new Array(8).fill(0).map(() => React.createRef());
+  ] = times(8, () => React.createRef());
   const [isForward, setDirection] = useState(true);
   const [isFirst, setIsFirst] = useState(true);
   const [value, toggleValue] = useState(true);
@@ -29,6 +30,7 @@ const ProjectBlurb = (props) => {
       animateRef.current.beginElement();
       svgRef.current.classList.toggle("animate");
       const offset = 15;
+      const refs = [svgRef, imgRef, linkedinRef, githubRef, viewProjectRef];
       if (value) {
         transformSVG(svgRef.current, offset);
         transformImage(imgRef.current, offset);
@@ -36,24 +38,16 @@ const ProjectBlurb = (props) => {
         transformGithub(githubRef.current, offset);
         transformViewProject(viewProjectRef.current, offset);
       } else {
-        svgRef.current.style.transform = "";
-        imgRef.current.style.transform = "";
-        linkedinRef.current.style.transform = "";
-        githubRef.current.style.transform = "";
-        viewProjectRef.current.style.transform = "";
+        refs.forEach((ref) => (ref.current.style.transform = ""));
       }
-      toggleNode(value, textRef.current);
-      toggleNode(value, linkedinRef.current);
-      toggleNode(value, githubRef.current);
-      toggleNode(value, viewProjectRef.current);
-      toggleNode(value, aboutRef.current);
+      [textRef, linkedinRef, githubRef, viewProjectRef, aboutRef].forEach(
+        (ref) => toggleNode(value, ref.current)
+      );
       toggleNode(value, svgRef.current, 0.4, "");
       toggleValue(!value);
       setIsFirst(false);
     }
   };
-  const text =
-    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
   return (
     <>
       <section
@@ -64,7 +58,7 @@ const ProjectBlurb = (props) => {
           <section className="back-button-section absolute left-0 max-h-full">
             <div onClick={() => animateSVG()}>
               <Arrow
-                rotate="180"
+                direction="left"
                 className="back-arrow"
                 stroke={color}
                 style={{ transition: "transform .5s ease-in-out" }}
@@ -92,51 +86,36 @@ const ProjectBlurb = (props) => {
         </nav>
         <article className="project-info-desc">
           <div>
-            <section className="timeline-section">
-              from yabba dabba do to now
-            </section>
+            <section className="timeline-section">{props.timeline}</section>
             <section className="about-section">
               <h3>About</h3>
-              <span>{text}</span>
+              <span>{props.about}</span>
             </section>
             <section className="tech-section">
               <h3>Technologies used:</h3>
               <ol>
-                {props.techlist ? (
-                  props.techlist.map((tech, index) => (
-                    <li key={index}>{tech}</li>
-                  ))
-                ) : (
-                  <></>
-                )}
-                <li>Mix flour, baking powder, sugar, and salt.</li>
-                <li>In another bowl, mix eggs, milk, and oil.</li>
-                <li>Stir both mixtures together.</li>
-                <li>Fill muffin tray 3/4 full.</li>
-                <li>Bake for 20 minutes.</li>
+                {Object.keys(props.techlist).map((tech, index) => {
+                  return (
+                    <li key={index} className="techlist">
+                      <img alt="" src={props.techlist[tech]} />
+                      {tech}
+                    </li>
+                  );
+                })}
               </ol>
             </section>
             <section className="challenges-section">
               <h3>Challenges faced:</h3>
               <ol>
-                {props.challenges ? (
-                  props.challenges.map((challenge, index) => (
-                    <li key={index}>{challenge}</li>
-                  ))
-                ) : (
-                  <></>
-                )}
-                <li>Mix flour, baking powder, sugar, and salt.</li>
-                <li>In another bowl, mix eggs, milk, and oil.</li>
-                <li>Stir both mixtures together.</li>
-                <li>Fill muffin tray 3/4 full.</li>
-                <li>Bake for 20 minutes.</li>
+                {props.challenges.map((challenge, index) => (
+                  <li key={index}>{challenge}</li>
+                ))}
               </ol>
             </section>
           </div>
         </article>
         <aside className="desc-img flex flex-wrap justify-center items-center p-6">
-          <ImageView alt="algoToData logo"></ImageView>
+          <ImageView alt="algoToData logo" images={props.images}></ImageView>
         </aside>
       </section>
       <div

@@ -15,7 +15,7 @@ const Error404 = () => {
         <p className="error-message">
           Don't worry! I have the right solution just for you!
         </p>
-        <a className="back-button" href="/">
+        <a className="back-button" href="/Portfolio">
           <NiceArrow className="back-arrow" direction="left" />
           <span id="back-text">Back</span>
         </a>

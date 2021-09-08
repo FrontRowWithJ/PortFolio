@@ -10,7 +10,7 @@ const ParticleCanvas = () => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     const { width, height } = setCanvasSize(canvas);
-    const particles = genParticles(12000, width, height);
+    const particles = genParticles(1000, width, height);
     window.addEventListener("resize", () => {
       const { width, height } = setCanvasSize(canvas);
       setCanvasBackground(ctx, width, height);

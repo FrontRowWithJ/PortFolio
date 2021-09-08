@@ -2,33 +2,28 @@ import { makeNoise3D } from "fast-simplex-noise";
 
 const noise = makeNoise3D(Math.random);
 
-const drawParticle = (ctx, incr, width, height, particle) => {
-  update(incr, particle);
-  wrap(width, height, particle);
-  display(ctx, width, height, particle);
+const drawParticle = (ctx, incr, width, height, p) => {
+  update(incr, p);
+  wrap(width, height, p);
+  display(ctx, width, height, p);
 };
 
-const update = (incr, particle) => {
-  const theta = noise(particle.x * 0.006, particle.y * 0.004, incr);
-  particle.x += 2 * Math.cos(theta);
-  particle.y += 2 * Math.sin(theta);
+const update = (incr, p) => {
+  const theta = noise(p.x * 0.006, p.y * 0.004, incr);
+  p.x += 2 * Math.cos(theta);
+  p.y += 2 * Math.sin(theta);
 };
 
-const display = (ctx, width, height, particle) => {
-  if (
-    particle.x > 0 &&
-    particle.x < width &&
-    particle.y > 0 &&
-    particle.y < height
-  )
-    ctx.fillRect(particle.x, particle.y, 1, 1);
+const display = (ctx, width, height, p) => {
+  if (p.x > 0 && p.x < width && p.y > 0 && p.y < height)
+    ctx.fillRect(p.x, p.y, 1, 1);
 };
 
-const wrap = (width, height, particle) => {
-  if (particle.x < 0) particle.x = width;
-  if (particle.x > width) particle.x = 0;
-  if (particle.y < 0) particle.y = height;
-  if (particle.y > height) particle.y = 0;
+const wrap = (width, height, p) => {
+  if (p.x < 0) p.x = width;
+  if (p.x > width) p.x = 0;
+  if (p.y < 0) p.y = height;
+  if (p.y > height) p.y = 0;
 };
 
 export default drawParticle;
