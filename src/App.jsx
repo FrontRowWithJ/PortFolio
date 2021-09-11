@@ -1,13 +1,19 @@
-import React from "react";
-import { Route, BrowserRouter as Router } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, HashRouter as Router } from "react-router-dom";
 import Home from "./Home";
 import Error404 from "./Error404";
+import init from "./Particle";
+
 const App = () => {
+  useEffect(() => init(), []);
   return (
-    <Router>
-      <Route path="/Portfolio/" exact component={Home} />
-      <Route path="/Portfolio/404" exact component={Error404} />
-    </Router>
+    <>
+      <Router basename="/">
+        <canvas id="test"></canvas>
+        <Route path="/" exact component={() => <Home />} />
+        <Route path="/404" exact component={() => <Error404 />} />
+      </Router>
+    </>
   );
 };
 export default App;

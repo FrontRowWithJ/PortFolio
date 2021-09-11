@@ -1,53 +1,68 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Linkedin from "./Linkedin";
 import Github from "./Github";
 import Textbox from "./ProjectTextBox";
 import "./proj-blurb.css";
 import Arrow from "./Arrow";
 import ImageView from "./ImageView";
-import { times } from "lodash";
+import { PROJECT_DESC, PROJECT_LIST, pageState } from "./PageState";
 
 const ProjectBlurb = (props) => {
   // const filter = `drop-shadow(-20px -20px 10px ${props.filter1}) drop-shadow(20px 20px 10px ${props.filter2})`;
   const filter = `drop-shadow(-20px -20px 10px #201b28) drop-shadow(20px 20px 10px #0e0d12)`;
-  const [
-    svgRef,
-    animateRef,
-    imgRef,
-    linkedinRef,
-    githubRef,
-    viewProjectRef,
-    textRef,
-    aboutRef,
-  ] = times(8, () => React.createRef());
   const [isForward, setDirection] = useState(true);
   const [isFirst, setIsFirst] = useState(true);
   const [value, toggleValue] = useState(true);
   const [color, setColor] = useState("white");
-  const animateSVG = () => {
+
+  const animateSVG = useCallback(() => {
     if (props.zIndex === 1) {
+      const idx = props.index;
+      const animate = document.getElementById("anim-" + idx);
+      const svg = document.getElementById(props.textboxID);
+      const img = document.getElementById("img-" + idx);
+      const linkedin = document.getElementById("linkedin-" + idx);
+      const github = document.getElementById("github-" + idx);
+      const viewProject = document.getElementById("viewProject-" + idx);
+      const text = document.getElementById("text-" + idx);
+      const about = document.getElementById("about-" + idx);
       setDirection(isFirst ? true : !isForward);
-      animateRef.current.beginElement();
-      svgRef.current.classList.toggle("animate");
+      animate.beginElement();
+      svg.classList.toggle("animate");
       const offset = 15;
-      const refs = [svgRef, imgRef, linkedinRef, githubRef, viewProjectRef];
+      const refs = [svg, img, linkedin, github, viewProject];
       if (value) {
-        transformSVG(svgRef.current, offset);
-        transformImage(imgRef.current, offset);
-        transformLinkedin(linkedinRef.current, offset);
-        transformGithub(githubRef.current, offset);
-        transformViewProject(viewProjectRef.current, offset);
-      } else {
-        refs.forEach((ref) => (ref.current.style.transform = ""));
-      }
-      [textRef, linkedinRef, githubRef, viewProjectRef, aboutRef].forEach(
-        (ref) => toggleNode(value, ref.current)
+        transformSVG(svg);
+        transformImage(img, offset);
+        transformLinkedin(linkedin, offset);
+        transformGithub(github, offset);
+        transformViewProject(viewProject, offset);
+      } else refs.forEach((ref) => (ref.style.transform = ""));
+      [text, linkedin, github, viewProject, about].forEach((ref) =>
+        toggleNode(value, ref)
       );
-      toggleNode(value, svgRef.current, 0.4, "");
+      toggleNode(value, svg, 0.4, "");
       toggleValue(!value);
       setIsFirst(false);
     }
-  };
+  }, [
+    props.zIndex,
+    props.textboxID,
+    props.index,
+    isFirst,
+    isForward,
+    value,
+    setDirection,
+    setIsFirst,
+  ]);
+
+  useEffect(() => {
+    document.body.onkeyup = (event) => {
+      if (event.key === "Escape" && pageState.state === PROJECT_DESC)
+        animateSVG();
+    };
+  }, [animateSVG]);
+
   return (
     <>
       <section
@@ -134,45 +149,37 @@ const ProjectBlurb = (props) => {
           <div className="project-header w-full relative flex justify-center">
             <Textbox
               isForward={isForward}
-              svgRef={svgRef}
-              animateRef={animateRef}
               fill={"#17141D"}
               filter={filter}
+              animID={"anim-" + props.index}
               id={props.textboxID}
               animateSVG={() => animateSVG()}
               className="project-textbox absolute bottom-0"
             />
             <div
-              ref={textRef}
+              id={"text-" + props.index}
               className="project-text absolute bottom-0 project-desc text-white"
             >
               <div className="project-text-hover relative">
                 <h1 className="uppercase">{props.description}</h1>
-                <h1
-                  className="uppercase"
-                  onClick={() => {
-                    animateSVG();
-                  }}
-                >
+                <h1 className="uppercase" onClick={() => animateSVG()}>
                   View More
                 </h1>
               </div>
             </div>
             <div
-              ref={aboutRef}
+              id={"about-" + props.index}
               style={{ transition: "opacity .4s linear" }}
               className="about-button absolute"
-              onClick={() => {
-                animateSVG();
-              }}
+              onClick={() => animateSVG()}
             >
               View More
               <div className="view-more-hover absolute h-full top-0 uppercase bg-clip-text">
-                View More
+                View _animateSVGMore
               </div>
             </div>
             <img
-              ref={imgRef}
+              id={"img-" + props.index}
               className="project-img absolute w-16 h-16"
               alt={props.alt}
               src={props.projectImage}
@@ -180,21 +187,21 @@ const ProjectBlurb = (props) => {
           </div>
           <div className="link-container absolute bottom-0 flex flex-row w-full items-center self-end">
             <a
-              ref={linkedinRef}
+              id={"linkedin-" + props.index}
               className="linkedin-link flex-grow"
               href="https://www.linkedin.com/in/adebusum/"
             >
               <Linkedin fill="white" />
             </a>
             <a
-              ref={githubRef}
+              id={"github-" + props.index}
               className="github-link flex-grow"
               href="https://github.com/FrontRowWithJ"
             >
               <Github fill="white" />
             </a>
             <a
-              ref={viewProjectRef}
+              id={"viewProject-" + props.index}
               className="project-link rounded-full text-white flex justify-center"
               href={props.projectLink}
             >
@@ -213,14 +220,18 @@ const toggleNode = (value, elem, opacity = 0, zIndex = "-1") => {
     elem.ontransitionend = () => {
       elem.style.zIndex = zIndex;
       elem.ontransitionend = null;
+      pageState.state = PROJECT_DESC;
     };
   } else {
     elem.style.zIndex = "";
     elem.style.opacity = 1;
+    elem.ontransitionend = () => {
+      pageState.state = PROJECT_LIST;
+    };
   }
 };
 
-const transformSVG = (svg, offset) => {
+const transformSVG = (svg) => {
   const rect = svg.getBoundingClientRect();
   const translateX = rect.left + rect.width / 2 - window.innerWidth / 2;
   const translateY = window.innerHeight - rect.bottom;

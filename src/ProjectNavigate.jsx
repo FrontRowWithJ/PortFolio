@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Arrow from "./Arrow";
 import "./proj-nav.css";
+import { pageState, PROJECT_LIST } from "./PageState";
+import { times } from "lodash";
 
 const eventHandler = (target, size, transform) => {
   target.style.width = target.style.height = size;
@@ -24,6 +26,7 @@ const disable = (target) => {
   eventHandler(target, "2.5rem", "");
 };
 
+let isAnimating = false;
 const ProjectNavigate = (props) => {
   const [index, setIndex] = useState(0);
   const [isEnabled, setEnable] = useState(true);
@@ -33,15 +36,14 @@ const ProjectNavigate = (props) => {
     if (index === props.numOfProjects - 1) disable(r);
     if (index === 1) enable(l);
     if (index === props.numOfProjects - 2) enable(r);
-    const arr = [];
-    arr.length = props.numOfProjects;
-    arr.fill(0);
+    const arr = times(props.numOfProjects, () => 0);
     arr[index] = 1;
     props.setIndices(arr);
   }, [index]);
 
   const animateCardSwitch = (index) => {
     setEnable(false);
+    isAnimating = true;
     const projectBlurb = props.blurbRefs.current[index].current;
     projectBlurb.classList.toggle("translate-anim");
     projectBlurb.ontransitionend = () => {
@@ -49,8 +51,19 @@ const ProjectNavigate = (props) => {
       setIndex(index);
       projectBlurb.ontransitionend = null;
       setEnable(true);
+      isAnimating = false;
     };
   };
+
+  useEffect(() => {
+    document.body.onwheel = (event) => {
+      if (pageState.state === PROJECT_LIST && !isAnimating) {
+        if (index < props.numOfProjects - 1 && event.deltaY > 0)
+          animateCardSwitch(index + 1);
+        else if (index > 0 && event.deltaY < 0) animateCardSwitch(index - 1);
+      }
+    };
+  }, [index]);
 
   return (
     <div

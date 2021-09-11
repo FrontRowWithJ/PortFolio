@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import "./proj-button.css";
+import { HOME, PROJECT_LIST, pageState } from "./PageState";
 
 const DELAY = 250;
 const animate = (isForward, condition, blur) => {
@@ -39,12 +40,16 @@ const ProjectButton = (props) => {
       animate(true, true, 10);
       const navButton = document.getElementById("nav-container");
       navButton.style.left = "";
+      pageState.state = PROJECT_LIST;
     } else if (props.animateForward === false) {
       // Show the button and hide the projects
       const elem = document.getElementsByClassName("project-blurb")[0];
       animate(false, elem.classList.contains("animate-forward"), 0);
+      pageState.state = HOME;
     }
+    // eslint-disable-next-line
   }, [props.animateForward, props.setAnimateForward]);
+
   return (
     <div
       id="project-button"

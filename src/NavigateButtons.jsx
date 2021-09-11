@@ -13,8 +13,7 @@ const enable = (node) => {
 };
 
 const disable = (node) => {
-  node.onmouseover = null;
-  node.onmouseout = null;
+  node.onmouseover = node.onmouseout = null;
   node.style.cursor = "not-allowed";
   node.style.opacity = 0.5;
   scaleNode(node, 1);

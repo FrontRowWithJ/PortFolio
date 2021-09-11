@@ -7,20 +7,16 @@ const ProjectTextBox = (props) => {
     "M 32 512 L 512 512 C 512 512 512 512 512 480 L 512 0 C 512 0 512 0 512 0 L 0 0 C 0 0 0 80 0 96 L 0 512 C 0 512 0 512 0 512 Z";
   return (
     <svg
-      ref={props.svgRef}
       id={props.id}
       className={props.className}
       style={{ filter: props.filter }}
       preserveAspectRatio="none"
       viewBox="0 0 512 512"
-      onClick={() => {
-        props.animateSVG();
-      }}
+      onClick={() => props.animateSVG()}
     >
       <path id="box" fill="#002642" d={props.isForward ? from : to}>
         <animate
-          ref={props.animateRef}
-          id="anim"
+          id={props.animID}
           fill="freeze"
           dur="0.5s"
           attributeName="d"

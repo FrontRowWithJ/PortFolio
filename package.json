@@ -20,7 +20,7 @@
     "prestart": "npm run build:tailwind",
     "start": "react-scripts start",
     "predeploy": "npm run build",
-    "deploy": "npm run build && gh-pages -d build",
+    "deploy": "gh-pages -d build",
     "prebuild": "npm run build:tailwind",
     "build": "react-scripts build",
     "test": "react-scripts test",

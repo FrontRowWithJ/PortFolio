@@ -2,10 +2,11 @@ import React from "react";
 import LinkedIn from "./Linkedin";
 import Github from "./Github";
 import headshot from "./empty-headshot.jpg";
+import { setFactor, BACKWARD } from "./Particle";
 import "./tailwind.output.css";
 import "./index.css";
 
-const PortfolioBlurb = () => {
+const PortfolioBlurb = (props) => {
   return (
     <div
       id="blurb"
@@ -27,13 +28,15 @@ const PortfolioBlurb = () => {
         <div>
           Hey! I'm Michael. Do you like what you see? Then let's get in
           <a className="text-white" href="mailto:michael.adebu@gmail.com">
-            {" "}
-            touch!
+            &nbsp;touch!
           </a>{" "}
           If not, I'll leave you with something
-          <a href="/Portfolio/404" className="text-white" onClick={(event) => {}}>
-            {" "}
-            better!
+          <a
+            href="#/404"
+            className="text-white"
+            onClick={() => setFactor(BACKWARD)}
+          >
+            &nbsp;better!
           </a>
         </div>
       </div>

@@ -18,7 +18,6 @@ import tkinterImg from "./Technology Logos/tkinter.png";
 import juliaImg0 from "./Project Images/julia-image-0.jpg";
 import juliaImg1 from "./Project Images/julia-image-1.jpg";
 import juliaImg2 from "./Project Images/julia-image-2.jpg";
-
 import algoImg0 from "./Project Images/algotodata-img-0.jpg";
 import algoImg1 from "./Project Images/algotodata-img-1.jpg";
 import algoImg2 from "./Project Images/algotodata-img-2.jpg";
@@ -83,10 +82,8 @@ const projects = [
 ];
 
 const ProjectDisplay = (props) => {
-  const [zIndices, setIndices] = useState([
-    1,
-    ...times(projects.length - 1, () => 0),
-  ]);
+  const [zIndices, setIndices] = useState(times(projects.length, () => 0));
+  zIndices[0] = 1;
   const blurbRefs = useRef([]);
   blurbRefs.current = times(projects.length, () => React.createRef());
   return (
