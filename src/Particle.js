@@ -38,14 +38,20 @@ const drawParticle = (ctx, incr, width, height, p) => {
 
 const update = (incr, p) => {
   const a = noise(p.x * 0.006, p.y * 0.004, incr);
-  return { x: p.x + fac * 2 * cos(a), y: p.y + fac * 2 * sin(a), off: p.off };
+  return {
+    x: p.x + fac * (2 * cos(a) + p.startX * 0.001),
+    y: p.y + fac * (2 * sin(a) + p.startY * 0.001),
+    off: p.off,
+    startX: p.startX,
+    startY: p.startY,
+  };
 };
 
 const display = (ctx, width, height, p) => {
   if (p.x > 0 && p.x < width && p.y > 0 && p.y < height) {
     ctx.beginPath();
     ctx.fillStyle = scaleGray(
-      ...hsv2rgb((p.off + (p.x / width) * 360) | 0, 1, 1),
+      ...hsv2rgb(((p.off + (p.x / width) * 360) | 0) % 360, 1, 1),
       fac / (END - START)
     );
     ctx.arc(p.x, p.y, radius, 0, Math.PI * 2, true);
@@ -55,7 +61,13 @@ const display = (ctx, width, height, p) => {
 };
 
 const wrap = (w, h, p) => {
-  const res = { x: p.x, y: p.y, off: p.off };
+  const res = {
+    x: p.x,
+    y: p.y,
+    off: p.off,
+    startX: p.startX,
+    startY: p.startY,
+  };
   if (p.x < 0) res.x = w;
   if (p.x > w) res.x = 0;
   if (p.y < 0) res.y = h;
@@ -89,11 +101,8 @@ const setCanvasSize = (canvas) => {
   return [canvas.width, canvas.height];
 };
 
-const toHex = (n) => {
-  return n.toString(16).padStart(2, "0");
-};
-
 const setCanvasBackground = (ctx, width, height) => {
+  const toHex = (n) => n.toString(16).padStart(2, "0");
   const r = toHex(floor(23 * fac));
   const g = toHex(floor(20 * fac));
   const b = toHex(floor(16 * fac));
@@ -104,7 +113,9 @@ const setCanvasBackground = (ctx, width, height) => {
 
 const genParticles = (numOfParticles, w, h) => {
   return times(numOfParticles, () => {
-    return { x: random() * w, y: random() * h, off: random() * 360 };
+    const x = random() * w;
+    const y = random() * h;
+    return { x: x, y: y, off: random() * 360, startX: x, startY: y };
   });
 };
 
@@ -116,7 +127,7 @@ const setCanvasStyle = (canvas) => {
 
 const init = () => {
   const inc = { val: 0 };
-  const canvas = document.getElementById("test");
+  const canvas = document.getElementById("bg-canvas");
   const ctx = canvas.getContext("2d");
   setCanvasStyle(canvas);
   const [w, h] = setCanvasSize(canvas);
@@ -127,7 +138,6 @@ const init = () => {
     inc.val = 0;
     particleObj.particles = genParticles(NUM_OF_PARTICLES, w, h);
   });
-
   requestAnimationFrame(() => draw(canvas, ctx, inc, particleObj));
 };
 
