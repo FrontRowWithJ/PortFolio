@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import Arrow from "./Arrow";
-import "./proj-nav.css";
+import "./style/proj-nav.css";
 import { pageState, PROJECT_LIST } from "./PageState";
 import { times } from "lodash";
 

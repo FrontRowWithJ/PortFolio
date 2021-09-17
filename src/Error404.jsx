@@ -1,5 +1,5 @@
 import React from "react";
-import "./error-404.css";
+import "./style/error-404.css";
 import NiceArrow from "./NiceArrow";
 import { setFactor, FORWARD } from "./Particle";
 

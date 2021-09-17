@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./image-view.css";
+import "./style/image-view.css";
 import NavButtons from "./NavigateButtons";
 import Carousel from "./Carousel";
 import { CAROUSEL, PROJECT_DESC, pageState } from "./PageState";

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import "./proj-button.css";
+import "./style/proj-button.css";
 import { HOME, PROJECT_LIST, pageState } from "./PageState";
 
 const DELAY = 250;
@@ -61,7 +61,7 @@ const ProjectButton = (props) => {
         }
       }}
     >
-      <span>Projects?</span>
+      <span>Projects</span>
     </div>
   );
 };

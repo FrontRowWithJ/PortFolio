@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
-import Linkedin from "./Linkedin";
+import LinkedIn from "./LinkedIn";
 import Github from "./Github";
 import Textbox from "./ProjectTextBox";
-import "./proj-blurb.css";
+import "./style/proj-blurb.css";
 import Arrow from "./Arrow";
 import ImageView from "./ImageView";
 import { PROJECT_DESC, PROJECT_LIST, pageState } from "./PageState";
@@ -91,12 +91,8 @@ const ProjectBlurb = (props) => {
           </section>
           <section className="view-project-section absolute right-0 max-h-full grid">
             <a href={props.projectLink}>View Project</a>
-            <a href="https://www.linkedin.com/in/adebusum/">
-              <Github fill="none" stroke="white" />
-            </a>
-            <a href="https://github.com/FrontRowWithJ">
-              <Linkedin fill="none" stroke="white" />
-            </a>
+            <Github fill="none" stroke="white" />
+            <LinkedIn fill="none" stroke="white" />
           </section>
         </nav>
         <article className="project-info-desc">
@@ -186,20 +182,16 @@ const ProjectBlurb = (props) => {
             />
           </div>
           <div className="link-container absolute bottom-0 flex flex-row w-full items-center self-end">
-            <a
+            <LinkedIn
               id={"linkedin-" + props.index}
-              className="linkedin-link flex-grow"
-              href="https://www.linkedin.com/in/adebusum/"
-            >
-              <Linkedin fill="white" />
-            </a>
-            <a
+              linkClass="linkedin-link"
+              fill="white"
+            />
+            <Github
               id={"github-" + props.index}
-              className="github-link flex-grow"
-              href="https://github.com/FrontRowWithJ"
-            >
-              <Github fill="white" />
-            </a>
+              fill="white"
+              linkClass="github-link"
+            />
             <a
               id={"viewProject-" + props.index}
               className="project-link rounded-full text-white flex justify-center"
