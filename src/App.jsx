@@ -9,7 +9,7 @@ const App = () => {
   return (
     <>
       <Router basename="/">
-        <canvas id="test"></canvas>
+        <canvas id="bg-canvas"></canvas>
         <Route path="/" exact component={() => <Home />} />
         <Route path="/404" exact component={() => <Error404 />} />
       </Router>
