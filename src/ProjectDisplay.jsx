@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import NavButton from "./ProjectNavigate";
 import ProjectBlurb from "./ProjectBlurb";
-import algotodataLogo from "./algotodataLogo.png";
-import mandelbrot from "./mandelbrot_set.png";
+import algotodataLogo from "./images/algotodataLogo.png";
+import mandelbrot from "./images/mandelbrot_set.png";
 import ProjectButton from "./ProjectButton";
 import { times } from "lodash";
 import bashImg from "./Technology Logos/bash.svg";
@@ -15,12 +15,12 @@ import pandasImg from "./Technology Logos/pandas.svg";
 import pythonImg from "./Technology Logos/python.svg";
 import reactImg from "./Technology Logos/react.svg";
 import tkinterImg from "./Technology Logos/tkinter.png";
-import juliaImg0 from "./Project Images/julia-image-0.jpg";
-import juliaImg1 from "./Project Images/julia-image-1.jpg";
-import juliaImg2 from "./Project Images/julia-image-2.jpg";
-import algoImg0 from "./Project Images/algotodata-img-0.jpg";
-import algoImg1 from "./Project Images/algotodata-img-1.jpg";
-import algoImg2 from "./Project Images/algotodata-img-2.jpg";
+import juliaImg0 from "./images/julia-image-0.jpg";
+import juliaImg1 from "./images/julia-image-1.jpg";
+import juliaImg2 from "./images/julia-image-2.jpg";
+import algoImg0 from "./images/algotodata-img-0.jpg";
+import algoImg1 from "./images/algotodata-img-1.jpg";
+import algoImg2 from "./images/algotodata-img-2.jpg";
 
 const projects = [
   {
