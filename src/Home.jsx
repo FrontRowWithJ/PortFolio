@@ -3,7 +3,7 @@ import PortfolioBlurb from "./PortfolioBlurb";
 import ProjectDisplay from "./ProjectDisplay";
 import { PROJECT_LIST, pageState } from "./PageState";
 
-const Home = (props) => {
+const Home = () => {
   const [animateForward, setAnimateForward] = useState(undefined);
   const [toggle, setToggle] = useState(true);
 
@@ -18,7 +18,7 @@ const Home = (props) => {
         setToggle(true);
       }
     });
-  });
+  }, []);
 
   return (
     <>
