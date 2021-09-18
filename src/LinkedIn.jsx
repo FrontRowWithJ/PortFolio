@@ -1,13 +1,17 @@
 import React from "react";
 
-const LinkedIn = (props) => {
+const LinkedIn = ({ id, linkClass, style, fill, stroke, className }) => {
   return (
-    <a id={props.id} className={props.linkCLass} href="https://www.linkedin.com/in/adebusum/">
+    <a
+      id={id}
+      className={linkClass}
+      href="https://www.linkedin.com/in/adebusum/"
+    >
       <svg
-        style={props.style}
-        fill={props.fill}
-        stroke={props.stroke}
-        className={props.className}
+        style={style}
+        fill={fill}
+        stroke={stroke}
+        className={className}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"

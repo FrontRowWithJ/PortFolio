@@ -8,12 +8,10 @@ import ImageView from "./ImageView";
 import { PROJECT_DESC, PROJECT_LIST, pageState } from "./PageState";
 
 const ProjectBlurb = (props) => {
-  // const filter = `drop-shadow(-20px -20px 10px ${props.filter1}) drop-shadow(20px 20px 10px ${props.filter2})`;
   const filter = `drop-shadow(-20px -20px 10px #201b28) drop-shadow(20px 20px 10px #0e0d12)`;
   const [isForward, setDirection] = useState(true);
   const [isFirst, setIsFirst] = useState(true);
   const [value, toggleValue] = useState(true);
-  const [color, setColor] = useState("white");
 
   const animateSVG = useCallback(() => {
     if (props.zIndex === 1) {
@@ -41,7 +39,7 @@ const ProjectBlurb = (props) => {
       [text, linkedin, github, viewProject, about].forEach((ref) =>
         toggleNode(value, ref)
       );
-      toggleNode(value, svg, 0.4, "");
+      toggleNode(value, svg, 0.9, "");
       toggleValue(!value);
       setIsFirst(false);
     }
@@ -71,21 +69,8 @@ const ProjectBlurb = (props) => {
       >
         <nav className="project-info-nav relative">
           <section className="back-button-section absolute left-0 max-h-full">
-            <div onClick={() => animateSVG()}>
-              <Arrow
-                direction="left"
-                className="back-arrow"
-                stroke={color}
-                style={{ transition: "transform .5s ease-in-out" }}
-                onMouseOver={(e) => {
-                  e.target.style.transform = "translateX(-50%)";
-                  setColor("black");
-                }}
-                onMouseOut={(e) => {
-                  e.target.style.transform = "";
-                  setColor("white");
-                }}
-              ></Arrow>
+            <div onClick={animateSVG}>
+              <Arrow direction="left" />
               Back
             </div>
           </section>
@@ -97,12 +82,15 @@ const ProjectBlurb = (props) => {
         </nav>
         <article className="project-info-desc">
           <div>
-            <section className="timeline-section">{props.timeline}</section>
-            <section className="about-section">
+            <section className="timeline-section flex items-center">
+              <h3>Timeline:</h3>
+              <span className="mb-4 center">{props.timeline}</span>
+            </section>
+            <section className="about-section flex items-center">
               <h3>About</h3>
               <span>{props.about}</span>
             </section>
-            <section className="tech-section">
+            <section className="tech-section mb-4">
               <h3>Technologies used:</h3>
               <ol>
                 {Object.keys(props.techlist).map((tech, index) => {
@@ -135,12 +123,9 @@ const ProjectBlurb = (props) => {
         style={{ zIndex: props.zIndex }}
       >
         <div
-          style={{
-            // backgroundColor: "#17141D",
-            backgroundColor: "#02040F",
-            // "boxShadow": `-1rem 0 3rem ${props.filter1}`
-          }}
-          className="card absolute h-full w-full rounded-3xl"
+          // style={{ backgroundColor: "#02040F" }}
+          style={{ backgroundColor: "#201b28" }}
+          className="absolute h-full w-full rounded-3xl"
         >
           <div className="project-header w-full relative flex justify-center">
             <Textbox
@@ -149,7 +134,7 @@ const ProjectBlurb = (props) => {
               filter={filter}
               animID={"anim-" + props.index}
               id={props.textboxID}
-              animateSVG={() => animateSVG()}
+              animateSVG={animateSVG}
               className="project-textbox absolute bottom-0"
             />
             <div

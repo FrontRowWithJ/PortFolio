@@ -1,16 +1,16 @@
 import React from "react";
 
-const Arrow = (props) => {
+const Arrow = ({className, direction}) => {
   return (
     <svg
-      className={props.className + " h-10 w-10"}
+      className={className + " h-10 w-10"}
       xmlns="http://www.w3.org/2000/svg"
       width="512"
       height="512"
       viewBox="0 0 512 512"
     >
       <polyline
-        transform={`rotate(${props.direction === "left" ? 180 : 0} 256 256)`}
+        transform={`rotate(${direction === "left" ? 180 : 0} 256 256)`}
         fill="none"
         stroke="white"
         strokeLinecap="round"

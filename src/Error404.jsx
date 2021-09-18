@@ -3,7 +3,7 @@ import "./style/error-404.css";
 import NiceArrow from "./NiceArrow";
 import { setFactor, FORWARD } from "./Particle";
 
-const Error404 = (props) => {
+const Error404 = () => {
   return (
     <main id="error-404-main">
       <div id="error-404-container">
