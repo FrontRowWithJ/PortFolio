@@ -51,6 +51,7 @@
 }
 
 .back-arrow {
+    transition: transform .5s ease-in-out;
     margin: 0 auto 0 0;
     fill: white;
     width: calc(var(--back-button-width) / 2);
