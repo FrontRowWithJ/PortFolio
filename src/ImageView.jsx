@@ -64,6 +64,8 @@ const ImageView = ({ images }) => {
   const endSwipe = () => {
     if (!start) return;
     if (!delta) {
+      setStartSwiping(false);
+      setIsSwiping(undefined);
       setView(DEFAULT_VIEW);
       pageState.state = PROJECT_DESC;
       setStart(undefined);
