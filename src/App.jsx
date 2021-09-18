@@ -5,7 +5,7 @@ import Error404 from "./Error404";
 import init from "./Particle";
 
 const App = () => {
-  useEffect(() => init(), []);
+  useEffect(init, []);
   return (
     <>
       <Router basename="/">
