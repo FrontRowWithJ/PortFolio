@@ -1,5 +1,6 @@
 import { makeNoise3D } from "fast-simplex-noise";
 import { times } from "lodash";
+import { pageState, CAROUSEL } from "./PageState";
 const { max, min, floor, cos, sin, random } = Math;
 const isAtEnd = window.location.href.includes("404");
 const noise = makeNoise3D(random);
@@ -82,16 +83,18 @@ const hsv2rgb = (h, s, v) => {
 };
 
 const draw = (cvs, ctx, inc, pObj) => {
-  setCanvasBackground(ctx, cvs.width, cvs.height);
-  inc.val += 0.008;
-  for (const i in pObj.particles)
-    pObj.particles[i] = drawParticle(
-      ctx,
-      inc.val,
-      cvs.width,
-      cvs.height,
-      pObj.particles[i]
-    );
+  if (pageState.state !== CAROUSEL) {
+    setCanvasBackground(ctx, cvs.width, cvs.height);
+    inc.val += 0.008;
+    for (const i in pObj.particles)
+      pObj.particles[i] = drawParticle(
+        ctx,
+        inc.val,
+        cvs.width,
+        cvs.height,
+        pObj.particles[i]
+      );
+  }
   requestAnimationFrame(() => draw(cvs, ctx, inc, pObj));
 };
 
