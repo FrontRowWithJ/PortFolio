@@ -20,56 +20,68 @@ const disable = (node) => {
 };
 
 const NavigateButtons = (props) => {
+  const { index, numOfItems, setIndex, updateState, style, className } = props;
   const [isEnabled, setEnable] = useState(true);
   const navContainerRef = useRef(null);
   useEffect(() => {
     const [leftButton, rightButton] = [...navContainerRef.current.children];
     enable(leftButton);
     enable(rightButton);
-    if (props.index === 0) disable(leftButton);
-    else if (props.index === props.numOfItems - 1) disable(rightButton);
-  }, [props.index, props.numOfItems]);
+    if (index === 0) disable(leftButton);
+    else if (index === numOfItems - 1) disable(rightButton);
+  }, [index, numOfItems]);
   return (
     <div
       ref={navContainerRef}
-      className={
-        "grid grid-cols-2 grid-rows-1 gap-2 h-12 w-24" + props.className
-      }
-      style={props.style}
+      className={`grid grid-cols-2 grid-rows-1 gap-2 h-12 w-24 ${className}`}
+      style={style}
     >
       <Button
         gridPos="col-start-1 col-end-2"
-        onclick={() => {
-          if (props.index > 0 && isEnabled)
-            props.updateState(props.index - 1, props.setIndex, setEnable);
-        }}
         direction="left"
+        onClick={() => {
+          if (
+            index > 0 &&
+            isEnabled &&
+            !props.startSwiping &&
+            !props.isTransitioning
+          ) {
+            props.setTransition(true);
+            updateState(index - 1, setIndex, setEnable);
+            setTimeout(() => props.setTransition(false), 600);
+          }
+        }}
       />
       <Button
         gridPos="col-start-2 col-end-3"
-        onclick={() => {
-          if (props.index < props.numOfItems - 1 && isEnabled)
-            props.updateState(props.index + 1, props.setIndex, setEnable);
+        onClick={() => {
+          if (
+            index < numOfItems - 1 &&
+            isEnabled &&
+            !props.startSwiping &&
+            !props.isTransitioning
+          ) {
+            props.setTransition(true);
+            updateState(index + 1, setIndex, setEnable);
+            setTimeout(() => props.setTransition(false), 600);
+          }
         }}
       />
     </div>
   );
 };
 
-const Button = (props) => {
+const Button = ({ gridPos, onClick, direction }) => {
   return (
     <div
-      className={
-        "rounded-full h-10 w-10 flex items-center justify-center" +
-        props.gridPos
-      }
-      onClick={props.onclick}
+      className={`rounded-full h-10 w-10 flex items-center justify-center${gridPos}`}
+      onClick={onClick}
       style={{
         background: "rgba(255, 255, 255, .5)",
         transition: "all .2s ease-in-out",
       }}
     >
-      <Arrow direction={props.direction} />
+      <Arrow direction={direction} />
     </div>
   );
 };
