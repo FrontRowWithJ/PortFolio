@@ -20,14 +20,19 @@
     cursor: pointer;
 }
 
-.img-view-container img {
+.img-view {
     transition: filter var(--anim-time) linear;
     filter: blur(0);
     width: calc(100% - var(--blur-amount) * 2);
     height: calc(100% - var(--blur-amount) * 2);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border: 2px solid white;
+    border-radius: 10px;
 }
 
-.img-view-container div {
+.img-view-container div:nth-child(2) {
     transition: opacity var(--anim-time) linear;
     z-index: -1;
     opacity: 0;
@@ -40,11 +45,11 @@
     flex-direction: column;
 }
 
-.img-view-container:hover img {
+.img-view-container:hover .img-view {
     filter: blur(var(--blur-amount));
 }
 
-.img-view-container:hover div {
+.img-view-container:hover div:nth-child(2) {
     z-index: 1;
     opacity: 1;
     border: 1px solid white;
