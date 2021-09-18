@@ -1,13 +1,13 @@
 import React from "react";
 
-const Github = (props) => {
+const Github = ({ style, fill, stroke, className, id, linkClass }) => {
   return (
-    <a href="https://github.com/FrontRowWithJ" id={props.id} className={props.linkClass}>
+    <a href="https://github.com/FrontRowWithJ" id={id} className={linkClass}>
       <svg
-        style={props.style}
-        fill={props.fill}
-        stroke={props.stroke}
-        className={props.className}
+        style={style}
+        fill={fill}
+        stroke={stroke}
+        className={className}
         xmlns="http://www.w3.org/2000/svg"
         width="24"
         height="24"
