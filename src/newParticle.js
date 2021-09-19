@@ -21,7 +21,6 @@ const COLORS = [
   [1, 0.3411764705882353, 0.2],
   [1, 0.7647058823529411, 0.058823529411764705],
 ];
-const NUM_OF_PARTICLES = 3000;
 const IS_AT_END = window.location.href.includes("404");
 const START = 0,
   END = 1;
@@ -68,9 +67,9 @@ const getYPos = (y, yScale, centerY) => (y - centerY) / yScale;
 const getXPrint = (x, xScale, centerX) => xScale * x + centerX;
 const getYPrint = (y, yScale, centerY) => yScale * y + centerY;
 
-const genBlobs = (w, h) => {
+const genBlobs = (w, h, n) => {
   const [xs, ys, cx, cy] = [w / 20, (h / 20) * (w / h), w / 2, h / 2];
-  return times(NUM_OF_PARTICLES, () => {
+  return times(n, () => {
     const [x, y] = [w, h].map((n) => Math.random() * n);
     return {
       x: getXPos(x, xs, cx),
@@ -131,9 +130,13 @@ const init = () => {
   const canvas = document.getElementById("bg-canvas");
   const ctx = canvas.getContext("2d");
   setCanvasStyle(canvas);
-  const obj = { blobs: genBlobs(...setCanvasSize(canvas)) };
+  const [w, h] = setCanvasSize(canvas);
+  const n = (w * h * 3000) / (2560 * 1440);
+  const obj = { blobs: genBlobs(w, h, n) };
   window.addEventListener("resize", () => {
-    obj.blobs = genBlobs(...setCanvasSize(canvas));
+    const [w, h] = setCanvasSize(canvas);
+    const n = (w * h * 3000) / (2560 * 1440);
+    obj.blobs = genBlobs(w, h, n);
   });
   requestAnimationFrame(() => draw(canvas, ctx, +new Date(), obj));
 };
