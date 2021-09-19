@@ -17,7 +17,6 @@ const ImageView = ({ images }) => {
   const [start, setStart] = useState(undefined);
   const [delta, setDelta] = useState(undefined);
   const [startSwiping, setStartSwiping] = useState(false);
-  const [isSwiping, setIsSwiping] = useState(undefined);
   const w = window.innerWidth || document.documentElement.clientWidth;
   const len = images.length;
   const nextImage = (newIndex, setIndex, setEnable) => {
@@ -40,7 +39,6 @@ const ImageView = ({ images }) => {
     const { pageX, pageY } = getEvent(event);
     setStart({ x: pageX, y: pageY, t: +new Date() });
     setStartSwiping(true);
-    setIsSwiping(undefined);
   };
 
   const moveSwipe = (event) => {
@@ -56,7 +54,6 @@ const ImageView = ({ images }) => {
     const l = index ? refs[index - 1].current : undefined;
     const m = refs[index].current;
     const r = index !== len - 1 ? refs[index + 1].current : undefined;
-    if (isSwiping === undefined) setIsSwiping(!!Math.abs(d.x));
     refs.forEach((ref) => (ref.current.style.transitionDuration = "0ms"));
     [l, m, r].forEach((e, i) => translate(e, [-w, 0, w][i] + d.x));
   };
@@ -65,7 +62,6 @@ const ImageView = ({ images }) => {
     if (!start) return;
     if (!delta) {
       setStartSwiping(false);
-      setIsSwiping(undefined);
       setView(DEFAULT_VIEW);
       pageState.state = PROJECT_DESC;
       setStart(undefined);
@@ -79,10 +75,7 @@ const ImageView = ({ images }) => {
     const l = index ? refs[index - 1].current : undefined;
     const m = refs[index].current;
     const r = index !== len - 1 ? refs[index + 1].current : undefined;
-    setTimeout(() => {
-      setStartSwiping(false);
-      setIsSwiping(undefined);
-    }, 600);
+    setTimeout(() => setStartSwiping(false), 600);
     if (isValidSwipe) {
       const direction = absX / delta.x;
       const pos =
@@ -94,10 +87,7 @@ const ImageView = ({ images }) => {
       if (direction < 0) newCurr = r ? index + 1 : index;
       else newCurr = l ? index - 1 : index;
       setIndex(newCurr);
-    } else {
-      const pos = [-w, 0, w];
-      [l, m, r].forEach((elem, i) => translate(elem, pos[i]));
-    }
+    } else [l, m, r].forEach((elem, i) => translate(elem, [-w, 0, w][i]));
     setDelta(undefined);
     setStart(undefined);
   };
