@@ -135,7 +135,7 @@ const init = () => {
   const obj = { blobs: genBlobs(w, h, n) };
   window.addEventListener("resize", () => {
     const [w, h] = setCanvasSize(canvas);
-    const n = (w * h * 3000) / (2560 * 1440);
+    const n = ((w * h * 4000) / (2560 * 1440)) | 0;
     obj.blobs = genBlobs(w, h, n);
   });
   requestAnimationFrame(() => draw(canvas, ctx, +new Date(), obj));
