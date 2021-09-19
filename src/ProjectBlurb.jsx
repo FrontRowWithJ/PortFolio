@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import LinkedIn from "./LinkedIn";
 import Github from "./Github";
 import Textbox from "./ProjectTextBox";
@@ -12,6 +12,7 @@ const ProjectBlurb = (props) => {
   const [isForward, setDirection] = useState(true);
   const [isFirst, setIsFirst] = useState(true);
   const [value, toggleValue] = useState(true);
+  const infoRef = useRef(null);
 
   const animateSVG = useCallback(() => {
     if (props.zIndex === 1) {
@@ -55,6 +56,19 @@ const ProjectBlurb = (props) => {
   ]);
 
   useEffect(() => {
+    const { style } = infoRef.current;
+    if (value) style.opacity = 0;
+    else style.display = "";
+    setTimeout(
+      () => {
+        if (value) style.display = "none";
+        else style.opacity = 1;
+      },
+      value ? 600 : 100
+    );
+  }, [value]);
+
+  useEffect(() => {
     document.body.onkeyup = (event) => {
       if (event.key === "Escape" && pageState.state === PROJECT_DESC)
         animateSVG();
@@ -64,8 +78,9 @@ const ProjectBlurb = (props) => {
   return (
     <>
       <section
+        ref={infoRef}
         className="project-info grid"
-        style={{ display: value ? "none" : "" }}
+        style={{ transition: "opacity .6s ease-in-out", opacity: 0 }}
       >
         <nav className="project-info-nav relative">
           <section className="back-button-section absolute left-0 max-h-full">
@@ -123,7 +138,6 @@ const ProjectBlurb = (props) => {
         style={{ zIndex: props.zIndex }}
       >
         <div
-          // style={{ backgroundColor: "#02040F" }}
           style={{ backgroundColor: "#201b28" }}
           className="absolute h-full w-full rounded-3xl"
         >
