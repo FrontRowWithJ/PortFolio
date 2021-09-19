@@ -1,5 +1,5 @@
 :root {
-    --back-button-width: 7vw;
+    --back-button-width: 9vw;
     --arrow-width: 87.5%;
     --wiggle-degree: 15deg;
     --animation-time: .3s;
@@ -27,27 +27,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: transparent;
     width: 50%;
     height: 30%;
     font-size: 450px;
-    text-shadow: 5px 5px 15px black;
+    /* text-shadow: 5px 5px 15px black; */
+    background: linear-gradient(to bottom, #2b2d42, #2f3e46);
+    background-clip: text;
 }
 
 .error-message {
+    font-size: 2rem;
+    color: transparent;
     color: white;
-    text-shadow: 5px 5px 15px black;
+
 }
 
 .back-button {
     color: white;
-    border: 1px solid white;
+    border: 2px solid white;
     border-radius: 100vw;
     display: flex;
     align-items: center;
     height: 30px;
     width: var(--back-button-width);
     padding: 25px 0;
+    margin-top: 1rem;
+    background: linear-gradient(to right, #2b2d42, #2f3e46);
 }
 
 .back-arrow {
@@ -75,6 +81,10 @@
 
 .back-button:hover #arrow-rect {
     animation: slide-arrow-rect .3s var(--animation-timing-function);
+}
+
+#back-text {
+    font-size: 1.2rem;
 }
 
 .back-button:hover #back-text {
