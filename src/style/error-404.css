@@ -26,13 +26,13 @@
 #error-number {
     display: flex;
     justify-content: center;
+    flex-direction: row;
     align-items: center;
     color: transparent;
     width: 50%;
     height: 30%;
     font-size: 450px;
-    /* text-shadow: 5px 5px 15px black; */
-    background: linear-gradient(to bottom, #2b2d42, #2f3e46);
+    background: linear-gradient(225deg, #2b2d42, #465d68);
     background-clip: text;
 }
 

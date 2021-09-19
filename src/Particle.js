@@ -33,7 +33,7 @@ export const setFactor = (sign) => {
 const drawParticle = (ctx, incr, width, height, p) => {
   update(incr, p);
   wrap(width, height, p);
-  display(ctx, width, height, p);
+  display(ctx, width, p);
 };
 
 //* rainbow vomit
@@ -45,17 +45,15 @@ const update = (incr, p) => {
   p.y = p.y + fac * (0.1 * sin(a) + p.sy * 0.001);
 };
 
-const display = (ctx, width, height, p) => {
-  if (p.x > 0 && p.x < width && p.y > 0 && p.y < height) {
-    ctx.beginPath();
-    ctx.fillStyle = scaleGray(
-      ...hsv2rgb(((p.off + (p.x / width) * 360) | 0) % 360, 1, 1),
-      fac / (END - START)
-    );
-    ctx.arc(p.x, p.y, radius, 0, Math.PI * 2, true);
-    ctx.fill();
-    ctx.closePath();
-  }
+const display = (ctx, width, p) => {
+  ctx.beginPath();
+  ctx.fillStyle = scaleGray(
+    ...hsv2rgb(((p.off + (p.x / width) * 360) | 0) % 360, 1, 1),
+    fac / (END - START)
+  );
+  ctx.arc(p.x, p.y, radius, 0, Math.PI * 2, true);
+  ctx.fill();
+  ctx.closePath();
 };
 
 const wrap = (w, h, p) => {

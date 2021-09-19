@@ -13,6 +13,7 @@ http://github.com/vamoss
 //Inspired by Felix Auer
 //http://www.felixauer.com/javascript/difeqrk.html
 import { times } from "lodash";
+import { pageState, CAROUSEL } from "./PageState";
 const COLORS = [
   [0.34509803921568627, 0.09411764705882353, 0.27058823529411763],
   [0.5647058823529412, 0.047058823529411764, 0.24705882352941178],
@@ -101,26 +102,28 @@ const draw = (canvas, ctx, start, obj) => {
   const { blobs } = obj;
   const deltaTime = +new Date() - start;
   const newStart = +new Date();
-  const [w, h] = [canvas.width, canvas.height];
-  const [xs, ys, cx, cy] = [w / 20, (h / 20) * (w / h), w / 2, h / 2];
-  ctx.fillStyle = "#1A06330A";
-  ctx.fillRect(0, 0, w, h);
-  const stepsize = deltaTime * 0.001;
-  blobs.forEach((blob) => {
-    let x = Math.sin(blob.y * 0.1) * 3;
-    let y = -Math.sin(blob.x * 0.1) * 3;
-    blob.x += blob.direction * x * stepsize * fac;
-    blob.y += blob.direction * y * stepsize * fac;
-    x = getXPrint(blob.x, xs, cx);
-    y = getYPrint(blob.y, ys, cy);
-    ctx.beginPath();
-    ctx.fillStyle = scaleGray(...COLORS[blob.color], fac / (END - START));
-    ctx.arc(x, y, blob.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.closePath();
-    blob.lastX = x;
-    blob.lastY = y;
-  });
+  if (pageState.state !== CAROUSEL) {
+    const [w, h] = [canvas.width, canvas.height];
+    const [xs, ys, cx, cy] = [w / 20, (h / 20) * (w / h), w / 2, h / 2];
+    ctx.fillStyle = "#1A06330A";
+    ctx.fillRect(0, 0, w, h);
+    const stepsize = deltaTime * 0.001;
+    blobs.forEach((blob) => {
+      let x = Math.sin(blob.y * 0.1) * 3;
+      let y = -Math.sin(blob.x * 0.1) * 3;
+      blob.x += blob.direction * x * stepsize * fac;
+      blob.y += blob.direction * y * stepsize * fac;
+      x = getXPrint(blob.x, xs, cx);
+      y = getYPrint(blob.y, ys, cy);
+      ctx.beginPath();
+      ctx.fillStyle = scaleGray(...COLORS[blob.color], fac / (END - START));
+      ctx.arc(x, y, blob.size, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.closePath();
+      blob.lastX = x;
+      blob.lastY = y;
+    });
+  }
   requestAnimationFrame(() => draw(canvas, ctx, newStart, obj));
 };
 
