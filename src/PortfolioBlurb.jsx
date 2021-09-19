@@ -2,7 +2,7 @@ import React from "react";
 import LinkedIn from "./LinkedIn";
 import Github from "./Github";
 import headshot from "./images/empty-headshot.jpg";
-import { setFactor, BACKWARD } from "./Particle";
+import { setFactor, BACKWARD } from "./newParticle";
 import "./tailwind.output.css";
 import "./style/index.css";
 

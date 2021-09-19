@@ -1,13 +1,13 @@
 import React from "react";
 import "./style/error-404.css";
 import NiceArrow from "./NiceArrow";
-import { setFactor, FORWARD } from "./Particle";
+import { setFactor, FORWARD } from "./newParticle";
 
 const Error404 = () => {
   return (
     <main id="error-404-main">
       <div id="error-404-container">
-        <div id="error-number">4&#x2639;4</div>
+        <div id="error-number">404</div>
         <p className="error-message">
           It seems that a better developer doesn't exist.
         </p>

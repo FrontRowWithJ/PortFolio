@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Route, HashRouter as Router } from "react-router-dom";
 import Home from "./Home";
 import Error404 from "./Error404";
-import init from "./Particle";
-
+import init from "./newParticle";
 const App = () => {
   useEffect(init, []);
   return (
