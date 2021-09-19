@@ -14,7 +14,7 @@ const NUM_OF_TICS = TOTAL_MS / TICK;
 let tally = isAtEnd ? NUM_OF_TICS : 0;
 const radius = 7;
 const opacity = 1;
-const NUM_OF_PARTICLES = 3000;
+const NUM_OF_PARTICLES = 1000;
 export const FORWARD = 1,
   BACKWARD = -1;
 
@@ -31,21 +31,18 @@ export const setFactor = (sign) => {
 };
 
 const drawParticle = (ctx, incr, width, height, p) => {
-  const p1 = update(incr, p);
-  const p2 = wrap(width, height, p1);
-  display(ctx, width, height, p2);
-  return p2;
+  update(incr, p);
+  wrap(width, height, p);
+  display(ctx, width, height, p);
 };
 
+//* rainbow vomit
+//* x: p.x + p.dx + 5 * (2 * cos(a)),
+//* y: p.y + p.dy + 5 * (2 * sin(a)),
 const update = (incr, p) => {
   const a = noise(p.x * 0.006, p.y * 0.004, incr);
-  return {
-    x: p.x + fac * (2 * cos(a) + p.startX * 0.001),
-    y: p.y + fac * (2 * sin(a) + p.startY * 0.001),
-    off: p.off,
-    startX: p.startX,
-    startY: p.startY,
-  };
+  p.x = p.x + fac * (0.1 * cos(a) + p.sx * 0.001);
+  p.y = p.y + fac * (0.1 * sin(a) + p.sy * 0.001);
 };
 
 const display = (ctx, width, height, p) => {
@@ -62,18 +59,10 @@ const display = (ctx, width, height, p) => {
 };
 
 const wrap = (w, h, p) => {
-  const res = {
-    x: p.x,
-    y: p.y,
-    off: p.off,
-    startX: p.startX,
-    startY: p.startY,
-  };
-  if (p.x < 0) res.x = w;
-  if (p.x > w) res.x = 0;
-  if (p.y < 0) res.y = h;
-  if (p.y > h) res.y = 0;
-  return res;
+  if (p.x < 0) p.x = w;
+  if (p.x > w) p.x = 0;
+  if (p.y < 0) p.y = h;
+  if (p.y > h) p.y = 0;
 };
 
 // input: h in [0,360] and s,v in [0,1] - output: r,g,b in [0,1]
@@ -87,13 +76,7 @@ const draw = (cvs, ctx, inc, pObj) => {
     setCanvasBackground(ctx, cvs.width, cvs.height);
     inc.val += 0.008;
     for (const i in pObj.particles)
-      pObj.particles[i] = drawParticle(
-        ctx,
-        inc.val,
-        cvs.width,
-        cvs.height,
-        pObj.particles[i]
-      );
+      drawParticle(ctx, inc.val, cvs.width, cvs.height, pObj.particles[i]);
   }
   requestAnimationFrame(() => draw(cvs, ctx, inc, pObj));
 };
@@ -104,21 +87,18 @@ const setCanvasSize = (canvas) => {
   return [canvas.width, canvas.height];
 };
 
+const toHex = (n) => n.toString(16).padStart(2, "0");
 const setCanvasBackground = (ctx, width, height) => {
-  const toHex = (n) => n.toString(16).padStart(2, "0");
-  const r = toHex(floor(23 * fac));
-  const g = toHex(floor(20 * fac));
-  const b = toHex(floor(16 * fac));
-  const alpha = toHex(floor(16));
-  ctx.fillStyle = "#" + r + g + b + alpha;
+  const [r, g, b] = [23, 20, 16].map((x) => toHex(floor(x * fac)));
+  const a = toHex(floor(16));
+  ctx.fillStyle = "#" + r + g + b + a;
   ctx.fillRect(0, 0, width, height);
 };
 
 const genParticles = (numOfParticles, w, h) => {
   return times(numOfParticles, () => {
-    const x = random() * w;
-    const y = random() * h;
-    return { x: x, y: y, off: random() * 360, startX: x, startY: y };
+    const [x, y, off] = [random() * w, random() * h, random() * 360];
+    return { x: x, y: y, off: off, sx: x, sy: y };
   });
 };
 
@@ -137,15 +117,14 @@ const init = () => {
   const particleObj = { particles: genParticles(NUM_OF_PARTICLES, w, h) };
   window.addEventListener("resize", () => {
     const [w, h] = setCanvasSize(canvas);
-    ctx.clearRect(0, 0, w, h);
     inc.val = 0;
     particleObj.particles = genParticles(NUM_OF_PARTICLES, w, h);
   });
   requestAnimationFrame(() => draw(canvas, ctx, inc, particleObj));
 };
 
+const lerp = (v0, v1, t) => v0 + t * (v1 - v0);
 const scaleGray = (r, g, b, x) => {
-  const lerp = (v0, v1, t) => v0 + t * (v1 - v0);
   const _r = lerp(0.299 * r, r, x);
   const _g = lerp(0.587 * g, g, x);
   const _b = lerp(0.114 * b, b, x);
@@ -155,7 +134,7 @@ const scaleGray = (r, g, b, x) => {
     _r * (1 - x) + _g * (1 - x) + _b,
   ]
     .map((n) => floor(n * 255))
-    .join(", ")}, ${opacity})`;
+    .join(", ")}, ${opacity * fac})`;
 };
 
 export default init;
