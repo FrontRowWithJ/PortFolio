@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./style/proj-button.css";
-import { HOME, PROJECT_LIST, pageState } from "./PageState";
+import { HOME, PROJECT_LIST, pageState } from "./pageState";
 
 const DELAY = 250;
 const animate = (isForward, condition, blur) => {
@@ -9,7 +9,7 @@ const animate = (isForward, condition, blur) => {
   button.classList.remove(
     isForward ? "project-button-reverse" : "project-button"
   );
-  document.getElementById("blurb").style.filter = `blur(${blur}px)`;
+  document.getElementById("blurb-container").style.filter = `blur(${blur}px)`;
   if (condition) {
     [...document.getElementsByClassName("project-blurb")].forEach(
       (elem, i, arr) => {
