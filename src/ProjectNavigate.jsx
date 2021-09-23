@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Arrow from "./Arrow";
 import "./style/proj-nav.css";
-import { pageState, PROJECT_LIST } from "./PageState";
+import { pageState, PROJECT_LIST } from "./pageState";
 import { times } from "lodash";
 
 const eventHandler = (target, size, transform) => {
@@ -26,10 +26,10 @@ const disable = (target) => {
   eventHandler(target, "2.5rem", "");
 };
 
-let isAnimating = false;
 const ProjectNavigate = (props) => {
   const [index, setIndex] = useState(0);
   const [isEnabled, setEnable] = useState(true);
+  const [isAnimating, setIsAnimating] = useState(false);
   useEffect(() => {
     const [l, r] = [...document.getElementById("nav-container").children];
     if (index === 0) disable(l);
@@ -43,7 +43,7 @@ const ProjectNavigate = (props) => {
 
   const animateCardSwitch = (index) => {
     setEnable(false);
-    isAnimating = true;
+    setIsAnimating(true);
     const projectBlurb = props.blurbRefs.current[index].current;
     projectBlurb.classList.toggle("translate-anim");
     projectBlurb.ontransitionend = () => {
@@ -51,7 +51,7 @@ const ProjectNavigate = (props) => {
       setIndex(index);
       projectBlurb.ontransitionend = null;
       setEnable(true);
-      isAnimating = false;
+      setIsAnimating(false)
     };
   };
 
