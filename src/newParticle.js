@@ -13,7 +13,7 @@ http://github.com/vamoss
 //Inspired by Felix Auer
 //http://www.felixauer.com/javascript/difeqrk.html
 import { times } from "lodash";
-import { pageState, CAROUSEL } from "./PageState";
+import { pageState, CAROUSEL } from "./pageState";
 const COLORS = [
   [0.34509803921568627, 0.09411764705882353, 0.27058823529411763],
   [0.5647058823529412, 0.047058823529411764, 0.24705882352941178],
@@ -126,18 +126,20 @@ const draw = (canvas, ctx, start, obj) => {
   requestAnimationFrame(() => draw(canvas, ctx, newStart, obj));
 };
 
+const reset = (obj, canvas) => {
+  const [w, h] = setCanvasSize(canvas);
+  const n = (w * h * 4000) / (2560 * 1440);
+  obj.blobs = genBlobs(w, h, n);
+};
+
 const init = () => {
   const canvas = document.getElementById("bg-canvas");
   const ctx = canvas.getContext("2d");
   setCanvasStyle(canvas);
-  const [w, h] = setCanvasSize(canvas);
-  const n = (w * h * 3000) / (2560 * 1440);
-  const obj = { blobs: genBlobs(w, h, n) };
-  window.addEventListener("resize", () => {
-    const [w, h] = setCanvasSize(canvas);
-    const n = ((w * h * 4000) / (2560 * 1440)) | 0;
-    obj.blobs = genBlobs(w, h, n);
-  });
+  const obj = { blobs: undefined };
+  reset(obj, canvas);
+  window.addEventListener("resize", () => reset(obj, canvas));
+  window.addEventListener("focus", () => reset(obj, canvas));
   requestAnimationFrame(() => draw(canvas, ctx, +new Date(), obj));
 };
 
