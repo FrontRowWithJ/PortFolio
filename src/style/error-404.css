@@ -28,12 +28,10 @@
     justify-content: center;
     flex-direction: row;
     align-items: center;
-    color: transparent;
+    color: white;
     width: 50%;
     height: 30%;
     font-size: 450px;
-    background: linear-gradient(225deg, #2b2d42, #465d68);
-    background-clip: text;
 }
 
 .error-message {
