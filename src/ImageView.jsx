@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./style/image-view.css";
 import NavButtons from "./NavigateButtons";
 import Carousel from "./Carousel";
-import { CAROUSEL, PROJECT_DESC, pageState } from "./PageState";
+import { CAROUSEL, PROJECT_DESC, pageState } from "./pageState";
 const CAROUSEL_VIEW = false,
   DEFAULT_VIEW = true;
 
@@ -61,11 +61,9 @@ const ImageView = ({ images }) => {
   const endSwipe = () => {
     if (!start) return;
     if (!delta) {
-      setStartSwiping(false);
-      setView(DEFAULT_VIEW);
       pageState.state = PROJECT_DESC;
-      setStart(undefined);
-      return;
+      setStartSwiping(!!setStart(undefined));
+      return setView(DEFAULT_VIEW);
     }
     const refs = imageRefs.current;
     refs.forEach((ref) => (ref.current.style.transitionDuration = ".6s"));
@@ -83,13 +81,11 @@ const ImageView = ({ images }) => {
           ? [2 * -w, (index !== len - 1) * -w, 0]
           : [0, (index !== 0) * w, 2 * w];
       [l, m, r].forEach((elem, i) => translate(elem, pos[i]));
-      let newCurr;
-      if (direction < 0) newCurr = r ? index + 1 : index;
-      else newCurr = l ? index - 1 : index;
+      const newCurr =
+        direction < 0 ? (r ? index + 1 : index) : l ? index - 1 : index;
       setIndex(newCurr);
     } else [l, m, r].forEach((elem, i) => translate(elem, [-w, 0, w][i]));
-    setDelta(undefined);
-    setStart(undefined);
+    setDelta(setStart(undefined));
   };
 
   return (
