@@ -3,6 +3,7 @@ import { Route, HashRouter as Router } from "react-router-dom";
 import Home from "./Home";
 import Error404 from "./Error404";
 import init from "./newParticle";
+import "./style/index.css"
 const App = () => {
   useEffect(init, []);
   return (
