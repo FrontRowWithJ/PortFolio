@@ -1,6 +1,6 @@
 import { makeNoise3D } from "fast-simplex-noise";
 import { times } from "lodash";
-import { pageState, CAROUSEL } from "./PageState";
+import { pageState, CAROUSEL } from "./util";
 const { max, min, floor, cos, sin, random } = Math;
 const isAtEnd = window.location.href.includes("404");
 const noise = makeNoise3D(random);
